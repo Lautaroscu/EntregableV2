@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Tue Oct 01 18:25:35 GMT-03:00 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-0192-49f9-6846-00000f317bf0 
+on database directory C:\Users\lauta\Downloads\Entregable2-main\Entregable2-main\MyDerbyDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@5a07e868 
+Loaded from file:/C:/Users/lauta/.m2/repository/org/apache/derby/derby/10.17.1.0/derby-10.17.1.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=23+37-2369
+user.dir=C:\Users\lauta\Downloads\Entregable2-main\Entregable2-main
+os.name=Windows 11
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
