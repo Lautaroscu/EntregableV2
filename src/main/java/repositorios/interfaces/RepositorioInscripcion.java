@@ -5,9 +5,6 @@ import entities.Carrera;
 import entities.Inscripcion;
 import entities.InscripcionId;
 
-import java.time.LocalDate;
-import java.util.List;
-
 public interface RepositorioInscripcion {
     Inscripcion obtenerInscripcion(InscripcionId id);
 
@@ -16,5 +13,4 @@ public interface RepositorioInscripcion {
     void eliminarInscripcion(InscripcionId id);
 
     void matricularAlumnoCarrera(Alumno alumno, Carrera carrera);
-
 }

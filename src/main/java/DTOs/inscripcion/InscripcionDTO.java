@@ -1,7 +1,5 @@
 package DTOs.inscripcion;
 
-import entities.Alumno;
-import entities.Carrera;
 import entities.Inscripcion;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,8 +14,6 @@ import java.time.LocalDate;
 @ToString
 @EqualsAndHashCode
 public class InscripcionDTO implements Serializable {
-
-
     private int id_carrera;
     private int nro_libreta;
     private LocalDate fechaInscripcion;

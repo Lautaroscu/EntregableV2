@@ -8,22 +8,18 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
-public class AlumnoDTO  implements Serializable {
+public class AlumnoDTO implements Serializable {
     private int nro_libreta;
     private String nombre;
-
     private String apellido;
-
     private int edad;
-
     private String genero;
-
     private String ciudad_residencia;
-
 
     public AlumnoDTO(Alumno a) {
         this.nombre = a.getNombre();
@@ -34,7 +30,8 @@ public class AlumnoDTO  implements Serializable {
         this.nro_libreta = a.getNro_libreta();
 
     }
-    public AlumnoDTO(String nombre, String apellido, int edad, String genero , String ciudad_residencia) {
+
+    public AlumnoDTO(String nombre, String apellido, int edad, String genero, String ciudad_residencia) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
@@ -42,6 +39,4 @@ public class AlumnoDTO  implements Serializable {
         this.ciudad_residencia = ciudad_residencia;
         this.nro_libreta = 0;
     }
-
-
 }

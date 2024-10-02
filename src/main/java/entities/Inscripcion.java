@@ -1,9 +1,8 @@
 package entities;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import jakarta.persistence.*;
 import lombok.ToString;
 
 import java.io.Serializable;
@@ -41,11 +40,7 @@ public class Inscripcion implements Serializable {
     @Column(name = "se_graduo")
     private boolean seGraduo;
 
-    public Inscripcion() {}
-
-    public String getAntiguedad() {
-        Period antiguedad = Period.between(fechaInscripcion, LocalDate.now());
-        return antiguedad.getYears() + " años, " + antiguedad.getMonths() + " meses";
+    public Inscripcion() {
     }
 
     public Inscripcion(Alumno alumno, Carrera carrera, LocalDate fechaInscripcion) {
@@ -57,4 +52,8 @@ public class Inscripcion implements Serializable {
         this.seGraduo = false;
     }
 
+    public String getAntiguedad() {
+        Period antiguedad = Period.between(fechaInscripcion, LocalDate.now());
+        return antiguedad.getYears() + " años, " + antiguedad.getMonths() + " meses";
+    }
 }

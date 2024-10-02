@@ -3,8 +3,6 @@ package services;
 import DTOs.alumno.AlumnoDTO;
 import DTOs.alumno.AlumnoMapper;
 import entities.Alumno;
-import entities.Carrera;
-import repositorios.interfaces.RepositorioCarrera;
 import repositorios.interfaces.RepositorioAlumno;
 
 import java.util.List;
@@ -12,19 +10,16 @@ import java.util.List;
 public class ServicioAlumno {
     private AlumnoMapper alumnoMapper;
     private RepositorioAlumno repositorioAlumno;
-    private RepositorioCarrera repositorioCarrera;
 
-    public ServicioAlumno(RepositorioAlumno repositorioAlumno, RepositorioCarrera repositorioCarrera) {
+    public ServicioAlumno(RepositorioAlumno repositorioAlumno) {
         alumnoMapper = new AlumnoMapper();
         this.repositorioAlumno = repositorioAlumno;
-        this.repositorioCarrera = repositorioCarrera;
     }
 
     public void altaAlumno(Alumno alumno) {
         repositorioAlumno.altaAlumno(alumno);
         alumno.setNro_libreta(alumno.getNro_libreta());
     }
-
 
     public void bajaAlumno(int nroLibreta) {
         repositorioAlumno.bajaAlumno(nroLibreta);
@@ -39,7 +34,6 @@ public class ServicioAlumno {
         modificado.setCiudad_residencia(alumno.getCiudad_residencia());
 
         repositorioAlumno.modificarAlumno(modificado);
-
     }
 
     public List<AlumnoDTO> listarAlumnos() {

@@ -18,7 +18,6 @@ import services.ServicioAlumno;
 import services.ServicioCarrera;
 import services.ServicioInscripcion;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
@@ -36,9 +35,9 @@ public class Main {
             RepositorioCarreraImpl repoCarreras = FactoryRepositorios.getRepositorioCarrera(em);
 
             //Servicios
-            ServicioAlumno servicioAlumnos = new ServicioAlumno(repoAlumnos, repoCarreras);
+            ServicioAlumno servicioAlumnos = new ServicioAlumno(repoAlumnos);
             ServicioCarrera servicioCarrera = new ServicioCarrera(repoCarreras);
-            ServicioInscripcion servicioInscripcion = new ServicioInscripcion(repoInscripciones , repoAlumnos , repoCarreras);
+            ServicioInscripcion servicioInscripcion = new ServicioInscripcion(repoInscripciones, repoAlumnos, repoCarreras);
 
             //2)
             // A)
@@ -47,7 +46,7 @@ public class Main {
             Alumno alumnoNuevo1 = new Alumno("Agustin", "Alvarez", 20, "Masculino", "Tandil");
             Alumno alumnoNuevo2 = new Alumno("Pepe", "Carrizo", 20, "Masculino", "Tandil");
             Alumno alumnoNuevo3 = new Alumno("Micaela", "Rodriguez", 22, "Femenino", "Tandil");
-            Alumno alumnoNuevo4 = new Alumno("Facundo" , "Perez", 23, "Masculino", "Tandil");
+            Alumno alumnoNuevo4 = new Alumno("Facundo", "Perez", 23, "Masculino", "Tandil");
 
             servicioAlumnos.altaAlumno(alumnoNuevo);
             servicioAlumnos.altaAlumno(alumnoNuevo1);
@@ -71,13 +70,12 @@ public class Main {
             servicioCarrera.adicionarCarrera(sistemas);
             servicioCarrera.adicionarCarrera(licAmbiental);
 
-            servicioInscripcion.matricularAlumnoCarrera(alumnoNuevo , tudai);
-            servicioInscripcion.matricularAlumnoCarrera(alumnoNuevo1 , tudai);
-            servicioInscripcion.matricularAlumnoCarrera(alumnoNuevo1 , sistemas);
-            servicioInscripcion.matricularAlumnoCarrera(alumnoNuevo2 , tudai);
-            servicioInscripcion.matricularAlumnoCarrera(alumnoNuevo2 , sistemas);
-            servicioInscripcion.matricularAlumnoCarrera(alumnoNuevo2 , licAmbiental);
-
+            servicioInscripcion.matricularAlumnoCarrera(alumnoNuevo, tudai);
+            servicioInscripcion.matricularAlumnoCarrera(alumnoNuevo1, tudai);
+            servicioInscripcion.matricularAlumnoCarrera(alumnoNuevo1, sistemas);
+            servicioInscripcion.matricularAlumnoCarrera(alumnoNuevo2, tudai);
+            servicioInscripcion.matricularAlumnoCarrera(alumnoNuevo2, sistemas);
+            servicioInscripcion.matricularAlumnoCarrera(alumnoNuevo2, licAmbiental);
 
 
             InscripcionId idInsc = new InscripcionId(tudai.getId_carrera(), alumnoRecuperado.getNro_libreta());
@@ -87,10 +85,8 @@ public class Main {
             System.out.println(inscripcionRecuperada);
 
             System.out.println(" ");
-            //Seteo true para que la query del 3) muestre al mneos 1 graduado
-            inscripcionRecuperada.setSeGraduo(true);
 
-            servicioInscripcion.modificarInscripcion(inscripcionRecuperada , idInsc);
+            servicioInscripcion.modificarInscripcion(inscripcionRecuperada, idInsc);
 
 
             //C)
@@ -105,7 +101,7 @@ public class Main {
             //D)
             AlumnoDTO alumnoDTOByNroLibreta = servicioAlumnos.recuperarAlumnoPorNroLib(1);
             System.out.println("Alumno Recuperado por numero de libreta : ");
-            System.out.println("Nro libreta: "+alumnoDTOByNroLibreta.getNro_libreta() + ": "
+            System.out.println("Nro libreta: " + alumnoDTOByNroLibreta.getNro_libreta() + ": "
                     + alumnoDTOByNroLibreta.getApellido() + ", " +
                     alumnoDTOByNroLibreta.getNombre() + " - Edad: " + alumnoDTOByNroLibreta.getEdad())
             ;
@@ -133,10 +129,6 @@ public class Main {
                         dto.getCantInscriptos());
             }
 
-
-
-
-
             System.out.println(" ");
             //G)
             System.out.println("Alumnos de una carrera que residen en una ciudad en especifico. Ej: Juarez");
@@ -149,6 +141,8 @@ public class Main {
 
             //3)
             System.out.println("Reporte inscriptos y egresados por carrera");
+            //Se setea en true el campo seGraduo en una inscripcion para mostrar un graduado en el reporte.
+            inscripcionRecuperada.setSeGraduo(true);
             List<CarreraReporteDTO> carreraReporteDTO = servicioCarrera.generarReporteInscriptosEgresados();
 
             System.out.printf("%-30s %-10s %-20s %-20s%n", "Carrera", "Año", "Cantidad Inscriptos", "Cantidad Egresados");

@@ -1,40 +1,24 @@
 package services;
 
-import DTOs.alumno.AlumnoDTO;
-import DTOs.carrera.CarreraDTO;
-import DTOs.carrera.CarreraMapper;
 import DTOs.inscripcion.InscripcionDTO;
-import DTOs.inscripcion.InscripcionMapper;
 import entities.Alumno;
 import entities.Carrera;
 import entities.Inscripcion;
 import entities.InscripcionId;
-import repositorios.FactoryRepositorios;
 import repositorios.interfaces.RepositorioAlumno;
 import repositorios.interfaces.RepositorioCarrera;
 import repositorios.interfaces.RepositorioInscripcion;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 public class ServicioInscripcion {
-    private InscripcionMapper inscripcionMapper;
-    private CarreraMapper carreraMapper;
     private RepositorioInscripcion repositorioInscripcion;
     private RepositorioAlumno repositorioAlumno;
     private RepositorioCarrera repositorioCarrera;
 
 
-    public ServicioInscripcion(RepositorioInscripcion repositorioInscripcion , RepositorioAlumno repositorioAlumno , RepositorioCarrera repositorioCarrera) {
-        this.inscripcionMapper = new InscripcionMapper();
-        this.carreraMapper = new CarreraMapper();
+    public ServicioInscripcion(RepositorioInscripcion repositorioInscripcion, RepositorioAlumno repositorioAlumno, RepositorioCarrera repositorioCarrera) {
         this.repositorioInscripcion = repositorioInscripcion;
         this.repositorioAlumno = repositorioAlumno;
         this.repositorioCarrera = repositorioCarrera;
-
-
-
     }
 
     public InscripcionDTO obtenerInscripcion(InscripcionId id) {
@@ -42,28 +26,22 @@ public class ServicioInscripcion {
         return new InscripcionDTO(inscripcion);
     }
 
-
     public void eliminarInscripcion(InscripcionId id) {
         repositorioInscripcion.eliminarInscripcion(id);
     }
 
-    public void modificarInscripcion(InscripcionDTO inscripcion , InscripcionId id) {
+    public void modificarInscripcion(InscripcionDTO inscripcion, InscripcionId id) {
+        Inscripcion inscripcionModificada = repositorioInscripcion.obtenerInscripcion(id);
+        inscripcionModificada.setAlumno(repositorioAlumno.recuperarAlumnoPorNroLib(inscripcion.getNro_libreta()));
+        inscripcionModificada.setCarrera(repositorioCarrera.recuperarCarrera(inscripcion.getId_carrera()));
+        inscripcionModificada.setSeGraduo(inscripcion.isSeGraduo());
+        inscripcionModificada.setIdCarrera(inscripcion.getId_carrera());
+        inscripcionModificada.setNroLibreta(inscripcion.getNro_libreta());
 
-       Inscripcion inscripcionModificada = repositorioInscripcion.obtenerInscripcion(id);
-       inscripcionModificada.setAlumno(repositorioAlumno.recuperarAlumnoPorNroLib(inscripcion.getNro_libreta()));
-       inscripcionModificada.setCarrera(repositorioCarrera.recuperarCarrera(inscripcion.getId_carrera()));
-       inscripcionModificada.setSeGraduo(inscripcion.isSeGraduo());
-       inscripcionModificada.setIdCarrera(inscripcion.getId_carrera());
-       inscripcionModificada.setNroLibreta(inscripcion.getNro_libreta());
-       
-       repositorioInscripcion.modificarInscripcion(inscripcionModificada);
-
+        repositorioInscripcion.modificarInscripcion(inscripcionModificada);
     }
 
     public void matricularAlumnoCarrera(Alumno alumno, Carrera carrera) {
-
-         repositorioInscripcion.matricularAlumnoCarrera(alumno, carrera);
+        repositorioInscripcion.matricularAlumnoCarrera(alumno, carrera);
     }
-
-
 }

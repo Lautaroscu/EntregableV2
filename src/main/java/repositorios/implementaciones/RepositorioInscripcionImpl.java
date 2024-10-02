@@ -6,26 +6,21 @@ import entities.Inscripcion;
 import entities.InscripcionId;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Query;
 import repositorios.BaseRepository;
-import repositorios.FactoryRepositorios;
 import repositorios.interfaces.RepositorioInscripcion;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class RepositorioInscripcionImpl extends BaseRepository implements RepositorioInscripcion {
-    private  static  RepositorioInscripcionImpl repositorioInscripcionImpl;
-
+    private static RepositorioInscripcionImpl repositorioInscripcionImpl;
 
     private RepositorioInscripcionImpl(EntityManager em) {
         super.em = em;
-
-
     }
 
+    //Singleton
     public static RepositorioInscripcionImpl getInstancia(EntityManager em) {
-        if(repositorioInscripcionImpl == null) {
+        if (repositorioInscripcionImpl == null) {
             repositorioInscripcionImpl = new RepositorioInscripcionImpl(em);
         }
         return repositorioInscripcionImpl;
@@ -38,7 +33,7 @@ public class RepositorioInscripcionImpl extends BaseRepository implements Reposi
     }
 
     private void agregarInscripcion(Inscripcion inscripcion) {
-        if(inscripcion != null) {
+        if (inscripcion != null) {
             try {
                 em.getTransaction().begin();  // Iniciar la transacción
 
@@ -51,7 +46,8 @@ public class RepositorioInscripcionImpl extends BaseRepository implements Reposi
                     em.getTransaction().rollback();  // Si hay un error, hacer rollback
                 }
                 throw e;
-            }        }
+            }
+        }
     }
 
     @Override
@@ -101,10 +97,8 @@ public class RepositorioInscripcionImpl extends BaseRepository implements Reposi
 
     @Override
     public void matricularAlumnoCarrera(Alumno alumno, Carrera carrera) {
-        Inscripcion inscripcion = new Inscripcion(alumno, carrera , LocalDate.now());
+        Inscripcion inscripcion = new Inscripcion(alumno, carrera, LocalDate.now());
         agregarInscripcion(inscripcion);
 
     }
-
-
 }

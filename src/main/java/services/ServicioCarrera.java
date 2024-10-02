@@ -7,13 +7,10 @@ import DTOs.carrera.CarreraReporteDTO;
 import entities.Carrera;
 import repositorios.interfaces.RepositorioCarrera;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ServicioCarrera {
-
     private CarreraMapper carreraMapper;
-    private CantInscriptosCarreraDTO cantInscriptosCarreraDTO;
     private RepositorioCarrera repositorioCarrera;
 
     public ServicioCarrera(RepositorioCarrera repositorioCarrera) {
@@ -23,8 +20,7 @@ public class ServicioCarrera {
 
     public CarreraDTO obtenerCarrera(int id) {
         Carrera carrera = repositorioCarrera.recuperarCarrera(id);
-        CarreraDTO carreraDTO = carreraMapper.apply(carrera);
-        return carreraDTO;
+        return carreraMapper.apply(carrera);
     }
 
     public void adicionarCarrera(Carrera carrera) {
@@ -45,12 +41,10 @@ public class ServicioCarrera {
     }
 
     private Carrera transformarDtoAEntidad(CarreraDTO carreraDTO) {
-        Carrera c = new Carrera(carreraDTO.getId_carrera(), carreraDTO.getNombre());
-        return c;
+        return new Carrera(carreraDTO.getId_carrera(), carreraDTO.getNombre());
     }
+
     public List<CantInscriptosCarreraDTO> obtenerCarrerasPorCantInscriptos() {
-      return repositorioCarrera.recuperarCarrerasSortByCantInscp();
-
+        return repositorioCarrera.recuperarCarrerasSortByCantInscp();
     }
-
 }

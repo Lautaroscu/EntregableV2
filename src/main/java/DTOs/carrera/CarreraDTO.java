@@ -7,12 +7,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+
 @Getter
 @Setter
 @ToString
 public class CarreraDTO implements Serializable {
     private int id_carrera;
-
     private String nombre;
 
     public CarreraDTO(Carrera c) {

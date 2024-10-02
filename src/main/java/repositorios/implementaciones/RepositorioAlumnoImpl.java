@@ -1,8 +1,6 @@
 package repositorios.implementaciones;
 
 import entities.Alumno;
-import entities.Carrera;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
@@ -12,14 +10,13 @@ import repositorios.interfaces.RepositorioAlumno;
 import java.util.List;
 
 public class RepositorioAlumnoImpl extends BaseRepository implements RepositorioAlumno {
-    private  static  RepositorioAlumnoImpl instancia;
-
+    private static RepositorioAlumnoImpl instancia;
 
     private RepositorioAlumnoImpl(EntityManager em) {
         super.em = em;
     }
 
-    //singleton
+    //Singleton
     public static RepositorioAlumnoImpl getInstancia(EntityManager em) {
         if (instancia == null) {
             instancia = new RepositorioAlumnoImpl(em);
@@ -29,7 +26,6 @@ public class RepositorioAlumnoImpl extends BaseRepository implements Repositorio
 
     public void altaAlumno(Alumno alumno) {
         if (alumno != null) {
-
             try {
                 em.getTransaction().begin();  // Iniciar la transacción
 
@@ -45,8 +41,6 @@ public class RepositorioAlumnoImpl extends BaseRepository implements Repositorio
             }
         }
     }
-
-
 
     @Override
     public void bajaAlumno(int nroLibreta) {
@@ -71,7 +65,6 @@ public class RepositorioAlumnoImpl extends BaseRepository implements Repositorio
         }
     }
 
-
     @Override
     public void modificarAlumno(Alumno alumno) {
         EntityTransaction transaction = em.getTransaction(); // Obtener la transacción
@@ -94,13 +87,10 @@ public class RepositorioAlumnoImpl extends BaseRepository implements Repositorio
         }
     }
 
-
     @Override
     public List<Alumno> listarAlumnos() {
         return em.createNamedQuery(Alumno.LISTARALUMNOS, Alumno.class).getResultList();
     }
-
-
 
     @Override
     public List<Alumno> recuperarAlumnosSortByApellido() {
@@ -126,5 +116,4 @@ public class RepositorioAlumnoImpl extends BaseRepository implements Repositorio
         q.setParameter("carrera", carrera);
         return q.getResultList();
     }
-
 }

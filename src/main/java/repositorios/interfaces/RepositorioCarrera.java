@@ -18,5 +18,4 @@ public interface RepositorioCarrera {
     public List<CarreraReporteDTO> obtenerReporteInscriptosEgresados();
 
     List<CantInscriptosCarreraDTO> recuperarCarrerasSortByCantInscp();
-
 }

@@ -12,6 +12,4 @@ public abstract class BaseRepository {
     public void setEm(EntityManager em) {
         this.em = em;
     }
-
-
 }

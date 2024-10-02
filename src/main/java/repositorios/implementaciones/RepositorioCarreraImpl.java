@@ -3,34 +3,26 @@ package repositorios.implementaciones;
 import DTOs.carrera.CantInscriptosCarreraDTO;
 import DTOs.carrera.CarreraReporteDTO;
 import entities.Carrera;
-import entities.Inscripcion;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
 import lombok.Getter;
 import lombok.Setter;
 import repositorios.BaseRepository;
 import repositorios.interfaces.RepositorioCarrera;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
 public class RepositorioCarreraImpl extends BaseRepository implements RepositorioCarrera {
     private static RepositorioCarreraImpl instance;
 
-
-
     private RepositorioCarreraImpl(EntityManager em) {
         super.em = em;
     }
 
-
-    //singleton
-    public  static RepositorioCarreraImpl getInstance(EntityManager em){
-        if(instance==null){
+    //Singleton
+    public static RepositorioCarreraImpl getInstance(EntityManager em) {
+        if (instance == null) {
             instance = new RepositorioCarreraImpl(em);
         }
         return instance;
@@ -46,15 +38,15 @@ public class RepositorioCarreraImpl extends BaseRepository implements Repositori
     public void adicionarCarrera(Carrera carrera) {
 
         try {
-            em.getTransaction().begin();  // Iniciar la transacción
+            em.getTransaction().begin();
 
             em.persist(carrera);
 
-            em.getTransaction().commit();  // Confirmar la transacción
+            em.getTransaction().commit();
 
         } catch (Exception e) {
             if (em.getTransaction() != null && em.getTransaction().isActive()) {
-                em.getTransaction().rollback();  // Si hay un error, hacer rollback
+                em.getTransaction().rollback();
             }
             throw e;
         }
@@ -80,10 +72,10 @@ public class RepositorioCarreraImpl extends BaseRepository implements Repositori
         return em.createNamedQuery("Carrera.ReporteInscriptosEgresados", CarreraReporteDTO.class)
                 .getResultList();
     }
+
     @Override
     public List<CantInscriptosCarreraDTO> recuperarCarrerasSortByCantInscp() {
 
-        return em.createNamedQuery(Carrera.CARRERASSORTCANTINSC  , CantInscriptosCarreraDTO.class).getResultList();
+        return em.createNamedQuery(Carrera.CARRERASSORTCANTINSC, CantInscriptosCarreraDTO.class).getResultList();
     }
-
 }
