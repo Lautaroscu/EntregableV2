@@ -40,8 +40,8 @@ public class Main {
             ServicioInscripcion servicioInscripcion = new ServicioInscripcion(repoInscripciones, repoAlumnos, repoCarreras);
 
             //2)
-            // A)
-            System.out.println("Alta de un estudiante..");
+            //A)
+            System.out.println("Alta de un estudiante:");
             Alumno alumnoNuevo = new Alumno("Lautaro", "Scuffi", 20, "Masculino", "Juarez");
             Alumno alumnoNuevo1 = new Alumno("Agustin", "Alvarez", 20, "Masculino", "Tandil");
             Alumno alumnoNuevo2 = new Alumno("Pepe", "Carrizo", 20, "Masculino", "Tandil");
@@ -53,6 +53,7 @@ public class Main {
             servicioAlumnos.altaAlumno(alumnoNuevo2);
             servicioAlumnos.altaAlumno(alumnoNuevo3);
             servicioAlumnos.altaAlumno(alumnoNuevo4);
+
             //Chequeo de que se inserto el dato
             AlumnoDTO alumnoRecuperado = servicioAlumnos.recuperarAlumnoPorNroLib(alumnoNuevo.getNro_libreta());
             System.out.println("Alumno insertado:");
@@ -77,7 +78,6 @@ public class Main {
             servicioInscripcion.matricularAlumnoCarrera(alumnoNuevo2, sistemas);
             servicioInscripcion.matricularAlumnoCarrera(alumnoNuevo2, licAmbiental);
 
-
             InscripcionId idInsc = new InscripcionId(tudai.getId_carrera(), alumnoRecuperado.getNro_libreta());
 
             InscripcionDTO inscripcionRecuperada = servicioInscripcion.obtenerInscripcion(idInsc);
@@ -86,11 +86,8 @@ public class Main {
 
             System.out.println(" ");
 
-            servicioInscripcion.modificarInscripcion(inscripcionRecuperada, idInsc);
-
-
             //C)
-            System.out.println("Alumnos ordenados por Apellido");
+            System.out.println("Alumnos ordenados por Apellido:");
             List<AlumnoDTO> alumnosOrdenados = servicioAlumnos.listarAlumnosOrdenadosByApellido();
             for (AlumnoDTO alumno : alumnosOrdenados) {
                 System.out.println(alumno.getApellido() + ", " + alumno.getNombre());
@@ -100,11 +97,10 @@ public class Main {
 
             //D)
             AlumnoDTO alumnoDTOByNroLibreta = servicioAlumnos.recuperarAlumnoPorNroLib(1);
-            System.out.println("Alumno Recuperado por numero de libreta : ");
+            System.out.println("Alumno Recuperado por numero de libreta: ");
             System.out.println("Nro libreta: " + alumnoDTOByNroLibreta.getNro_libreta() + ": "
                     + alumnoDTOByNroLibreta.getApellido() + ", " +
-                    alumnoDTOByNroLibreta.getNombre() + " - Edad: " + alumnoDTOByNroLibreta.getEdad())
-            ;
+                    alumnoDTOByNroLibreta.getNombre() + " - Edad: " + alumnoDTOByNroLibreta.getEdad());
 
             System.out.println(" ");
 
@@ -116,8 +112,9 @@ public class Main {
             }
 
             System.out.println(" ");
+
             //F)
-            System.out.println("Carreras y su cantidad de alumnos inscriptos");
+            System.out.println("Carreras y su cantidad de alumnos inscriptos:");
             List<CantInscriptosCarreraDTO> carreras = servicioCarrera.obtenerCarrerasPorCantInscriptos();
 
             System.out.printf("%-30s %-20s%n", "Carrera", "Cantidad Inscriptos");
@@ -130,6 +127,7 @@ public class Main {
             }
 
             System.out.println(" ");
+
             //G)
             System.out.println("Alumnos de una carrera que residen en una ciudad en especifico. Ej: Juarez");
             List<AlumnoDTO> alumnosByCiudadyCarrera = servicioAlumnos.listarAlumnos("tudai", "Juarez");
@@ -141,8 +139,9 @@ public class Main {
 
             //3)
             System.out.println("Reporte inscriptos y egresados por carrera");
-            //Se setea en true el campo seGraduo en una inscripcion para mostrar un graduado en el reporte.
+            //Se setea en true el campo "seGraduo" en una inscripcion para mostrar un graduado en el reporte.
             inscripcionRecuperada.setSeGraduo(true);
+            servicioInscripcion.modificarInscripcion(inscripcionRecuperada, idInsc);
             List<CarreraReporteDTO> carreraReporteDTO = servicioCarrera.generarReporteInscriptosEgresados();
 
             System.out.printf("%-30s %-10s %-20s %-20s%n", "Carrera", "Año", "Cantidad Inscriptos", "Cantidad Egresados");
@@ -159,7 +158,6 @@ public class Main {
             if (em != null && em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            e.printStackTrace();
         } finally {
             if (em != null) {
                 em.close();
